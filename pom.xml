@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fpmislata</groupId>
-	<artifactId>back</artifactId>
+	<artifactId>banco</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>back</name>
+	<name>banco</name>
 	<description></description>
 	<url/>
 	<licenses>
