@@ -45,13 +45,12 @@ CREATE TABLE `card` (
 
 CREATE TABLE `account` (
     `iban` VARCHAR(34) NOT NULL ,
-    `name` VARCHAR(255) NOT NULL UNIQUE,
     `balance` DECIMAL(16, 6) NOT NULL,
     PRIMARY KEY (`iban`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `banking_movement` (
-    `id` int(11) NOT NULL,
+    `id` int(11) NOT NULL AUTO_INCREMENT,
     `origin_account` VARCHAR(34) NOT NULL,
     `origin_card` DECIMAL(16, 6),
     `recipient_account` VARCHAR(34) NOT NULL,
