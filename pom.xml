@@ -45,14 +45,12 @@
 		<com.fasterxml.jackson.version>2.20.1</com.fasterxml.jackson.version>
 		<org.flywaydb.version>11.17.0</org.flywaydb.version>
 		<com.h2database.version>2.3.232</com.h2database.version>
-        <jakarta.validation.version>3.1.1</jakarta.validation.version>
         <at.favre.lib.version>0.10.2</at.favre.lib.version>
     </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>${spring.boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

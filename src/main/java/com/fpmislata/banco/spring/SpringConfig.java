@@ -30,8 +30,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EntityScan(basePackages = "com.fpmislata.back.persistence.dao.impl.entity")
+@EntityScan(basePackages = "com.fpmislata.banco.persistence.dao.impl.entity")
 public class SpringConfig {
+
 
     // User DAO Bean
 
