@@ -6,42 +6,42 @@ import com.fpmislata.banco.domain.service.dto.UserDto;
 
 public class UserMapper {
 
-    private static UserMapper instance;
+  private static UserMapper instance;
 
-    private UserMapper() {
+  private UserMapper() {
+  }
+
+  public static UserMapper getInstance() {
+    if (instance == null) {
+      instance = new UserMapper();
     }
+    return instance;
+  }
 
-    public static UserMapper getInstance() {
-        if (instance == null) {
-            instance = new UserMapper();
-        }
-        return instance;
+  public UserDto fromUserRequestToUserDto(RegisterUserRequest registerUserRequest) {
+    if (registerUserRequest == null) {
+      return null;
     }
+    return new UserDto(
+        null,
+        registerUserRequest.name(),
+        registerUserRequest.surname(),
+        registerUserRequest.surname2(),
+        registerUserRequest.dni(),
+        registerUserRequest.password(),
+        null
 
-    public UserDto fromUserRequestToUserDto(RegisterUserRequest registerUserRequest) {
-        if (registerUserRequest == null) {
-            return null;
-        }
-        return new UserDto(
-                null,
-                null,
-                null,
-                null,
-                registerUserRequest.dni(),
-                registerUserRequest.password(),
-                null
+    );
+  }
 
-        );
+  public UserResponse fromUserDtoToUserResponse(UserDto userDto) {
+    if (userDto == null) {
+      return null;
     }
-
-    public UserResponse fromUserDtoToUserResponse(UserDto userDto) {
-        if (userDto == null) {
-            return null;
-        }
-        return new UserResponse(
-                userDto.id(),
-                userDto.dni()
-        );
-    }
+    return new UserResponse(
+        userDto.id(),
+        userDto.name(),
+        userDto.dni());
+  }
 
 }

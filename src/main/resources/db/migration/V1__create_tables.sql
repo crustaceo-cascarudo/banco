@@ -9,23 +9,6 @@ CREATE TABLE `user` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-TipoMovimientoBancario
-Debe //Quitar dinero
-Haber //Añadir dinero
-
-MovimientoBancario
-TipoMovimientoBancario tipoMovimientoBancario
-OrigenMovimientoBancario origenMovimientoBancario
-TarjetaCredito tarjetaCreditoOrigen
-Date fecha
-BigDecimal importe
-String concepto
-
-OrigenMovimientoBancario
-Transferencia
-Domiciliacion
-TarjetaBancaria
-
 CREATE TABLE `session` (
     `token` VARCHAR(255) NOT NULL,
     `user_id` INT(11) NOT NULL,
@@ -33,6 +16,15 @@ CREATE TABLE `session` (
     PRIMARY KEY (`token`),
     CONSTRAINT `fk_sessions_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `account` (
+    `iban` VARCHAR(34) NOT NULL ,
+    `balance` DECIMAL(16, 6) NOT NULL,
+    `user_id` INT(11) NOT NULL,
+    PRIMARY KEY (`iban`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE `card` (
     `card_number` INT(19) NOT NULL,
@@ -43,14 +35,6 @@ CREATE TABLE `card` (
     `account_iban` VARCHAR(34) NOT NULL,
     PRIMARY KEY (`card_number`),
     FOREIGN KEY (`account_iban`) REFERENCES `account`(`iban`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `account` (
-    `iban` VARCHAR(34) NOT NULL ,
-    `balance` DECIMAL(16, 6) NOT NULL,
-    `user_id` INT(11) NOT NULL,
-    PRIMARY KEY (`iban`),
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `banking_movement` (

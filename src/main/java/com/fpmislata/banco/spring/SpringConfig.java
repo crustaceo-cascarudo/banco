@@ -25,7 +25,7 @@ import com.fpmislata.banco.persistence.repository.impl.BankAccountRepositoryImpl
 import com.fpmislata.banco.persistence.repository.impl.BankMovementRepositoryImpl;
 import com.fpmislata.banco.persistence.repository.impl.CreditCardRepositoryImpl;
 import com.fpmislata.banco.persistence.repository.impl.UserRepositoryImpl;
-import org.springframework.boot.persistence.autoconfigure.EntityScan;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,83 +33,82 @@ import org.springframework.context.annotation.Configuration;
 @EntityScan(basePackages = "com.fpmislata.banco.persistence.dao.impl.entity")
 public class SpringConfig {
 
+  // User DAO Bean
 
-    // User DAO Bean
+  @Bean
+  public UserDao userDao() {
+    return new UserDaoJpa();
+  }
 
-    @Bean
-    public UserDao userDao() {
-        return new UserDaoJpa();
-    }
+  @Bean
+  public UserRepository userRepository(UserDao userDao) {
+    return new UserRepositoryImpl(userDao);
+  }
 
-    @Bean
-    public UserRepository userRepository(UserDao userDao) {
-        return new UserRepositoryImpl(userDao);
-    }
+  @Bean
+  public UserService userService(UserRepository userRepository, PasswordEncoderImpl passwordEncoderImpl) {
+    return new UserServiceImpl(userRepository, passwordEncoderImpl);
+  }
 
-    @Bean
-    public UserService userService(UserRepository userRepository, PasswordEncoderImpl passwordEncoderImpl) {
-        return new UserServiceImpl(userRepository, passwordEncoderImpl);
-    }
+  @Bean
+  public PasswordEncoderImpl passwordEncoderImpl() {
+    return new PasswordEncoderImpl();
+  }
 
-    @Bean
-    public PasswordEncoderImpl passwordEncoderImpl() {
-        return new PasswordEncoderImpl();
-    }
+  // ----------------------------------------------
 
-    // ----------------------------------------------
+  // BankAccount DAO Bean
 
-    // BankAccount DAO Bean
+  @Bean
+  public BankAccountDao bankAccountDao() {
+    return new BankAccountDaoJpa();
+  }
 
-    @Bean
-    public BankAccountDao bankAccountDao(){
-        return new BankAccountDaoJpa();
-    }
+  @Bean
+  public BankAccountRepository bankAccountRepository(BankAccountDao bankAccountDao) {
+    return new BankAccountRepositoryImpl(bankAccountDao);
+  }
 
-    @Bean
-    public BankAccountRepository bankAccountRepository(BankAccountDao bankAccountDao){
-        return new BankAccountRepositoryImpl(bankAccountDao);
-    }
+  @Bean
+  public BankAccountService bankAccountService(BankAccountRepository bankAccountRepository) {
+    return new BankAccountServiceImpl(bankAccountRepository);
+  }
 
-    @Bean
-    public BankAccountService bankAccountService(BankAccountRepository bankAccountRepository){
-        return new BankAccountServiceImpl(bankAccountRepository);
-    }
+  // ----------------------------------------------
 
-    // ----------------------------------------------
+  // BankMovement DAO Bean
 
-    // BankMovement DAO Bean
+  @Bean
+  public BankMovementDao bankMovementDao() {
+    return new BankMovementDaoJpa();
+  }
 
-    @Bean
-    public BankMovementDao bankMovementDao(){
-        return new BankMovementDaoJpa();
-    }
+  @Bean
+  public BankMovementRepository bankMovementRepository(BankMovementDao bankMovementDao) {
+    return new BankMovementRepositoryImpl(bankMovementDao);
+  }
 
-    @Bean
-    public BankMovementRepository bankMovementRepository(BankMovementDao bankMovementDao){
-        return new BankMovementRepositoryImpl(bankMovementDao);
-    }
+  @Bean
+  public BankMovementService bankMovementService(BankMovementRepository bankMovementRepository) {
+    return new BankMovementServiceImpl(bankMovementRepository);
+  }
 
-    @Bean
-    public BankMovementService bankMovementService(BankMovementRepository bankMovementRepository){
-        return new BankMovementServiceImpl(bankMovementRepository);
-    }
+  // ----------------------------------------------
 
-    // ----------------------------------------------
+  // CreditCard DAO Bean
 
-    // CreditCard DAO Bean
+  @Bean
+  public CreditCardDao creditCardDao() {
+    return new CreditCardDaoJpa();
+  }
 
-    @Bean
-    public CreditCardDao creditCardDao(){
-        return new CreditCardDaoJpa();
-    }
+  @Bean
+  public CreditCardRepository creditCardRepository(CreditCardDao creditCardDao) {
+    return new CreditCardRepositoryImpl(creditCardDao);
+  }
 
-    @Bean
-    public CreditCardRepository creditCardRepository(CreditCardDao creditCardDao){
-        return new CreditCardRepositoryImpl(creditCardDao);
-    }
-
-    @Bean
-    public CreditCardService creditCardService(CreditCardRepository creditCardRepository){
-        return new CreditCardServiceImpl(creditCardRepository);
-    }
+  @Bean
+  public CreditCardService creditCardService(CreditCardRepository creditCardRepository) {
+    return new CreditCardServiceImpl(creditCardRepository);
+  }
 }
