@@ -120,12 +120,9 @@ public class TokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        System.out.println("Usuario autenticado: " + user.name() + " (Role: " + user.role() + ")");
-
         // Agregar información del usuario al request
         request.setAttribute("authenticatedUser", user);
         request.setAttribute("authenticatedUserId", user.id());
-        request.setAttribute("authenticatedUserRole", user.role());
         request.setAttribute("authenticatedUserName", user.name());
 
         // Continuar con la cadena de filtros
