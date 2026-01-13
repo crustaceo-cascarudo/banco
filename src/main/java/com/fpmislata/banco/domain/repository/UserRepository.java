@@ -7,10 +7,9 @@ import java.util.Optional;
 
 public interface UserRepository {
     UserEntity save(UserEntity userEntity);
-    List<UserEntity> findAll();
     Optional<UserEntity> findById(Long id);
-    List<UserEntity> findByName(String name);
-    UserEntity logByName(String name);
+    List<UserEntity> findByDni(String dni);
+    UserEntity logByDni(String dni);
     void delete(Long id);
     String createSessionToken(Long userId);
     UserEntity findByToken(String token);

@@ -23,13 +23,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserEntity> findAll() {
-        return userDao.findAll(0, 5).stream()
-                .map(UserMapper.getInstance()::fromUserJpaEntitytoUserEntity)
-                .toList();
-    }
-
-    @Override
     public Optional<UserEntity> findById(Long id) {
         UserJpaEntity jpaEntity = userDao.findById(id).orElse(null);
         UserEntity entity = UserMapper.getInstance().fromUserJpaEntitytoUserEntity(jpaEntity);
@@ -37,8 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserEntity> findByName(String name) {
-        List<UserJpaEntity> jpaEntities = userDao.findByName(name).
+    public List<UserEntity> findByDni(String dni) {
+        List<UserJpaEntity> jpaEntities = userDao.findByDni(dni).
                 stream().toList();
         if (jpaEntities.isEmpty()) {
             return List.of();
@@ -49,8 +42,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UserEntity logByName(String name) {
-        List<UserJpaEntity> jpaEntities = userDao.findByName(name).
+    public UserEntity logByDni(String dni) {
+        List<UserJpaEntity> jpaEntities = userDao.findByDni(dni).
                 stream().toList();
         if (jpaEntities.isEmpty()) {
             return null;

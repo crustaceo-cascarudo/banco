@@ -1,6 +1,5 @@
 package com.fpmislata.banco.persistence.dao.impl.entity;
 
-import com.fpmislata.banco.domain.enumerado.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,21 +9,22 @@ public class UserJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String surname1;
+    private String surname2;
+    private String dni;
     @Column(name = "password")
     private String passwordHash;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
 
     public UserJpaEntity() {
     }
 
-    public UserJpaEntity(Long id, String name, String passwordHash, Role role) {
+    public UserJpaEntity(Long id, String name, String surname1, String surname2, String dni, String passwordHash) {
         this.id = id;
         this.name = name;
+        this.surname1 = surname1;
+        this.surname2 = surname2;
+        this.dni = dni;
         this.passwordHash = passwordHash;
-        this.role = role;
     }
 
     public Long getId() {
@@ -35,11 +35,19 @@ public class UserJpaEntity {
         return name;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getSurname1() {
+        return surname1;
     }
 
-    public Role getRole() {
-        return role;
+    public String getSurname2() {
+        return surname2;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 }

@@ -24,10 +24,13 @@ public class UserMapper {
         }
         return new UserDto(
                 null,
-                registerUserRequest.name(),
-                registerUserRequest.password(),
                 null,
-                registerUserRequest.role()
+                null,
+                null,
+                registerUserRequest.dni(),
+                registerUserRequest.password(),
+                null
+
         );
     }
 
@@ -37,8 +40,7 @@ public class UserMapper {
         }
         return new UserResponse(
                 userDto.id(),
-                userDto.name(),
-                userDto.role()
+                userDto.dni()
         );
     }
 

@@ -24,18 +24,24 @@ public class UserMapper {
         return new UserJpaEntity(
                 userEntity.id(),
                 userEntity.name(),
-                userEntity.passwordHash(),
-                userEntity.role());
+                userEntity.surname1(),
+                userEntity.surname2(),
+                userEntity.dni(),
+                userEntity.passwordHash()
+        );
     }
 
-    public UserEntity fromUserJpaEntitytoUserEntity(UserJpaEntity jpaEntity) {
-        if (jpaEntity == null) {
+    public UserEntity fromUserJpaEntitytoUserEntity(UserJpaEntity userJpaEntity) {
+        if (userJpaEntity == null) {
             return null;
         }
         return new UserEntity(
-                jpaEntity.getId(),
-                jpaEntity.getName(),
-                jpaEntity.getPasswordHash(),
-                jpaEntity.getRole());
+                userJpaEntity.getId(),
+                userJpaEntity.getName(),
+                userJpaEntity.getSurname1(),
+                userJpaEntity.getSurname2(),
+                userJpaEntity.getDni(),
+                userJpaEntity.getPasswordHash()
+        );
     }
 }

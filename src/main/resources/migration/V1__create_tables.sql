@@ -1,8 +1,8 @@
 CREATE TABLE `user` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL UNIQUE,
-    `surname1` VARCHAR(255) NOT NULL UNIQUE,
-    `surname2` VARCHAR(255) NOT NULL UNIQUE,
+    `name` VARCHAR(255) NOT NULL,
+    `surname1` VARCHAR(255) NOT NULL,
+    `surname2` VARCHAR(255) NOT NULL,
     `dni` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `api_token` VARCHAR(255) ,
@@ -40,13 +40,17 @@ CREATE TABLE `card` (
     `expiration_date` DATE NOT NULL,
     `full_name` VARCHAR(255) NOT NULL,
     `type` ENUM('CREDIT', 'DEBIT', 'PREPAY') NOT NULL,
-    PRIMARY KEY (`card_number`)
+    `account_iban` VARCHAR(34) NOT NULL,
+    PRIMARY KEY (`card_number`),
+    FOREIGN KEY (`account_iban`) REFERENCES `account`(`iban`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `account` (
     `iban` VARCHAR(34) NOT NULL ,
     `balance` DECIMAL(16, 6) NOT NULL,
-    PRIMARY KEY (`iban`)
+    `user_id` INT(11) NOT NULL,
+    PRIMARY KEY (`iban`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `banking_movement` (
@@ -62,13 +66,4 @@ CREATE TABLE `banking_movement` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `account_banking_movement` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `account_iban` VARCHAR(34) NOT NULL,
-    `banking_movement_id` INT(11) NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`account_iban`) REFERENCES `account`(`iban`) ON DELETE CASCADE,
-    FOREIGN KEY (`banking_movement_id`) REFERENCES `banking_movement`(`id`) ON DELETE CASCADE,
-    UNIQUE KEY `unique_account_banking_movement` (`account_iban`, `banking_movement_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

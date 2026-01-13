@@ -23,15 +23,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<UserDto> users = userService.findAll();
-        List<UserResponse> response = users.stream()
-                .map(UserMapper.getInstance()::fromUserDtoToUserResponse)
-                .toList();
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterUserRequest request) {
         UserDto userDto = UserMapper.getInstance().fromUserRequestToUserDto(request);
@@ -42,8 +33,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginUserRequest request) {
-        String token = userService.logByName(request.name(), request.plainPassword());
-        List<UserDto> users = userService.findByName(request.name());
+        String token = userService.logByDni(request.dni(), request.plainPassword());
+        List<UserDto> users = userService.findByDni(request.dni());
         if (users.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
@@ -75,8 +66,8 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserResponse>> findByName(@RequestParam String name) {
-        List<UserDto> users = userService.findByName(name);
+    public ResponseEntity<List<UserResponse>> findByDni(@RequestParam String dni) {
+        List<UserDto> users = userService.findByDni(dni);
         List<UserResponse> response = users.stream()
                 .map(UserMapper.getInstance()::fromUserDtoToUserResponse)
                 .toList();
@@ -89,9 +80,12 @@ public class UserController {
         UserDto updatedUser = userService.update(new UserDto(
                 id,
                 userDto.name(),
+                userDto.surname1(),
+                userDto.surname2(),
+                userDto.dni(),
                 userDto.plainPassword(),
-                userDto.passwordHash(),
-                userDto.role()));
+                userDto.passwordHash()
+        ));
         UserResponse response = UserMapper.getInstance().fromUserDtoToUserResponse(updatedUser);
         return ResponseEntity.ok(response);
     }

@@ -8,10 +8,9 @@ import java.util.Optional;
 public interface UserService {
     UserDto create(UserDto userDto);
     UserDto update(UserDto userDto);
-    String logByName(String name, String password); 
+    String logByDni(String dni, String password);
     void logout(String token);
     Optional<UserDto> findById(Long id);
-    List<UserDto> findByName(String name);
-    List<UserDto> findAll();
+    List<UserDto> findByDni(String dni);
     void delete(Long id);
 }

@@ -24,17 +24,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto create(UserDto userDto) {
-        List<UserDto> existingUsersByName = findByName(userDto.name());
+        List<UserDto> existingUsersByName = findByDni(userDto.dni());
         if (!existingUsersByName.isEmpty()) {
-            throw new IllegalArgumentException("User with name " + userDto.name() + " already exists.");
+            throw new IllegalArgumentException("User with dni " + userDto.dni() + " already exists.");
         }
         String hashedpassword = passwordEncoderService.encode(userDto.plainPassword());
         userDto = new UserDto(
                 null,
                 userDto.name(),
+                userDto.surname1(),
+                userDto.surname2(),
+                userDto.dni(),
                 userDto.plainPassword(),
-                hashedpassword,
-                userDto.role());
+                hashedpassword
+                );
         UserEntity userEntity = UserMapper.getInstance()
                 .fromUserToUserEntity(UserMapper.getInstance().fromUserDtoToUser(userDto));
         userEntity = userRepository.save(userEntity);
@@ -61,22 +64,19 @@ public class UserServiceImpl implements UserService {
         if (existingUser.isEmpty()) {
             throw new IllegalArgumentException("User with id " + id + " does not exist.");
         }
-        if (existingUser.get().role().equals("ADMIN")) {
-            throw new IllegalArgumentException("Cannot delete an ADMIN user.");
-        }
         userRepository.delete(id);
     }
 
     @Override
     @Transactional
-    public String logByName(String name, String password) {
-        List<UserDto> existingUsers = findByName(name);
+    public String logByDni(String dni, String password) {
+        List<UserDto> existingUsers = findByDni(dni);
         if (existingUsers.isEmpty()) {
-            throw new IllegalArgumentException("User with name " + name + " does not exist.");
+            throw new IllegalArgumentException("User with DNI " + dni + " does not exist.");
         }
         boolean passwordMatches = passwordEncoderService.verify(password, existingUsers.get(0).passwordHash());
         if (!passwordMatches) {
-            throw new IllegalArgumentException("Incorrect password for user " + name + ".");
+            throw new IllegalArgumentException("Incorrect password for user with DNI" + dni + ".");
         }
 
         // Crear token de sesión
@@ -107,16 +107,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findByName(String name) {
-        return userRepository.findByName(name).stream()
-                .map(UserMapper.getInstance()::fromUserEntityToUser)
-                .map(UserMapper.getInstance()::fromUserToUserDto)
-                .toList();
-    }
-
-    @Override
-    public List<UserDto> findAll() {
-        return userRepository.findAll().stream()
+    public List<UserDto> findByDni(String dni) {
+        return userRepository.findByDni(dni).stream()
                 .map(UserMapper.getInstance()::fromUserEntityToUser)
                 .map(UserMapper.getInstance()::fromUserToUserDto)
                 .toList();

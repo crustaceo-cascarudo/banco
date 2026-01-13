@@ -25,10 +25,10 @@ public class UserDaoJpa implements UserDao {
     }
 
     @Override
-    public List<UserJpaEntity> findByName(String name) {
-        String jpql = "SELECT u FROM UserJpaEntity u WHERE LOWER(u.name) LIKE LOWER(:name)";
+    public List<UserJpaEntity> findByDni(String dni) {
+        String jpql = "SELECT u FROM UserJpaEntity u WHERE u.dni = :dni";
         return entityManager.createQuery(jpql, UserJpaEntity.class)
-                .setParameter("name", "%" + name + "%")
+                .setParameter("dni", dni)
                 .getResultList();
     }
 
@@ -84,14 +84,4 @@ public class UserDaoJpa implements UserDao {
         return entityManager.createQuery("SELECT COUNT(u) FROM UserJpaEntity u", Long.class)
                 .getSingleResult();
     }
-
-    @Override
-    public List<UserJpaEntity> findAll(int pageNumber, int pageSize) {
-        int pageIndex = Math.max(pageNumber - 1, 0);
-        return entityManager.createQuery("SELECT u FROM UserJpaEntity u", UserJpaEntity.class)
-                .setFirstResult(pageIndex * pageSize)
-                .setMaxResults(pageSize)
-                .getResultList();
-    }
-
 }
