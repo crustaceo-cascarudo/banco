@@ -34,8 +34,8 @@ public class BankAccountController {
     }
 
     @PostMapping
-    public ResponseEntity<BankAccountDto> create(@RequestBody @Validated BankAccountDto bankAccountDto) {
-        return ResponseEntity.ok(bankAccountService.create(bankAccountDto));
+    public ResponseEntity<BankAccountDto> create(@RequestBody Long userId) {
+        return ResponseEntity.ok(bankAccountService.create(userId));
     }
 
     @PutMapping("/{iban}")

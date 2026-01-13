@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class BankAccountServiceImpl implements BankAccountService {
     private final BankAccountRepository bankAccountRepository;
@@ -21,14 +22,16 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     @Transactional
-    public BankAccountDto create(BankAccountDto bankAccountDto) {
-        if(findByIban(bankAccountDto.iban()).isPresent()){
-            throw new BusinessException("Bank account with iban '"+bankAccountDto.iban()+"' already exists");
-        }
-
-        BankAccountEntity bankAccountEntity = BankAccountMapper.getInstance().fromBankAccountToBankAccountEntity(
-                BankAccountMapper.getInstance().fromBankAccountDtoToBankAccount(bankAccountDto)
+    public BankAccountDto create(Long userId) {
+        BankAccountEntity bankAccountEntity = new BankAccountEntity(
+                generateIban(),
+                0.0,
+                userId
         );
+
+        if(findByIban(bankAccountEntity.iban()).isPresent()){
+            throw new BusinessException("Bank account with iban '"+ bankAccountEntity.iban()+"' already exists");
+        }
 
         return BankAccountMapper.getInstance().fromBankAccountToBankAccountDto(
                 BankAccountMapper.getInstance().fromBankAccountEntityToBankAccount(
@@ -80,5 +83,27 @@ public class BankAccountServiceImpl implements BankAccountService {
             throw new ResourceNotFoundException("No bank account found with iban "+iban);
         }
         bankAccountRepository.delete(iban);
+    }
+
+    private String generateIban(){
+        StringBuilder newIban = new StringBuilder("ES");
+        int bankNumber = 7564;
+        int sucursalNumber = 2437;
+        int checkNumber1 = (int) (10+Math.random()*100);
+        int checkNumber2 = (int) (10+Math.random()*100);
+
+        StringBuilder bban = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            int r = (int) (Math.random()*(10));
+            bban.append(r);
+        }
+
+        newIban.append(checkNumber1)
+                .append(bankNumber)
+                .append(sucursalNumber)
+                .append(checkNumber2)
+                .append(bban);
+
+        return newIban.toString();
     }
 }
