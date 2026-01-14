@@ -1,6 +1,6 @@
 package com.fpmislata.banco.domain.service.impl;
 
-import com.fpmislata.banco.domain.Exception.BusinessException;
+import com.fpmislata.banco.controller.webModel.request.CreateCreditCardRequest;
 import com.fpmislata.banco.domain.Exception.ResourceNotFoundException;
 import com.fpmislata.banco.domain.mapper.CreditCardMapper;
 import com.fpmislata.banco.domain.repository.CreditCardRepository;
@@ -9,6 +9,8 @@ import com.fpmislata.banco.domain.service.CreditCardService;
 import com.fpmislata.banco.domain.service.dto.CreditCardDto;
 import jakarta.transaction.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,20 +24,42 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     @Transactional
-    public CreditCardDto create(CreditCardDto cardDto) {
-        if(findByCardNumber(cardDto.cardNumber()).isPresent()){
-            throw new BusinessException("Card with id '"+cardDto.cardNumber()+"' already exists");
-        }
-
-        CreditCardEntity ingredientEntity = CreditCardMapper.getInstance().fromCreditCardToCreditCardEntity(
-                CreditCardMapper.getInstance().fromCreditCardDtoToCreditCard(cardDto)
+    public CreditCardDto create(CreateCreditCardRequest request) {
+        CreditCardEntity cardEntity = new CreditCardEntity(
+                generateCardNumber(),
+                Date.valueOf(LocalDate.now().plusYears(3)),
+                generateCvc(),
+                request.fullName(),
+                request.fullName()
         );
+
+        if(findByCardNumber(cardEntity.cardNumber()).isPresent()){
+            create(request);
+        }
 
         return CreditCardMapper.getInstance().fromCreditCardToCreditCardDto(
                 CreditCardMapper.getInstance().fromCreditCardEntityToCreditCard(
-                        creditCardRepository.save(ingredientEntity)
+                        creditCardRepository.save(cardEntity)
                 )
         );
+    }
+
+    private Long generateCardNumber() {
+        int industryIdentifier = 4;
+        int issuingBankNumber = 75643;
+
+        StringBuilder individualAccount = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            int r = (int) (Math.random()*(10));
+            individualAccount.append(r);
+        }
+
+        String cardNumber = String.valueOf(industryIdentifier) + String.valueOf(issuingBankNumber) + individualAccount.toString();
+        return Long.parseLong(cardNumber);
+    }
+
+    private int generateCvc() {
+        return (int) (Math.random() * (999+1)) + 100;
     }
 
     @Override

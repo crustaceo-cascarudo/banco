@@ -30,7 +30,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         );
 
         if(findByIban(bankAccountEntity.iban()).isPresent()){
-            throw new BusinessException("Bank account with iban '"+ bankAccountEntity.iban()+"' already exists");
+            create(userId);
         }
 
         return BankAccountMapper.getInstance().fromBankAccountToBankAccountDto(

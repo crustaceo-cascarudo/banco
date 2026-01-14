@@ -1,6 +1,7 @@
 package com.fpmislata.banco.controller;
 
 
+import com.fpmislata.banco.controller.webModel.request.CreateCreditCardRequest;
 import com.fpmislata.banco.domain.Exception.ResourceNotFoundException;
 import com.fpmislata.banco.domain.service.CreditCardService;
 import com.fpmislata.banco.domain.service.dto.CreditCardDto;
@@ -32,8 +33,8 @@ public class CreditCardController {
     }
 
     @PostMapping
-    public ResponseEntity<CreditCardDto> create(@RequestBody @Validated CreditCardDto creditCardDto) {
-        return ResponseEntity.ok(creditCardService.create(creditCardDto));
+    public ResponseEntity<CreditCardDto> create(@RequestBody CreateCreditCardRequest request) {
+        return ResponseEntity.ok(creditCardService.create(request));
     }
 
     @PutMapping("/{cardNumber}")
