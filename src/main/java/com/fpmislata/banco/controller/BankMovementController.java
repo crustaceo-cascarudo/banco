@@ -35,11 +35,6 @@ public class BankMovementController {
         return ResponseEntity.ok(bankMovementService.findByRecipientAccountIban(iban));
     }
 
-    @PostMapping
-    public ResponseEntity<BankMovementDto> create(@RequestBody @Validated BankMovementDto bankMovementDto) {
-        return ResponseEntity.ok(bankMovementService.create(bankMovementDto));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<BankMovementDto> update(
             @PathVariable Long id,
