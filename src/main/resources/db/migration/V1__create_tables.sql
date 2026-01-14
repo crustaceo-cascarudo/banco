@@ -27,7 +27,7 @@ CREATE TABLE `account` (
 
 
 CREATE TABLE `card` (
-    `card_number` INT(19) NOT NULL,
+    `card_number` VARCHAR(19) NOT NULL,
     `cvc` int(3) NOT NULL,
     `expiration_date` DATE NOT NULL,
     `full_name` VARCHAR(255) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `card` (
 CREATE TABLE `banking_movement` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `origin_account` VARCHAR(34) NOT NULL,
-    `origin_card` DECIMAL(16, 6),
+    `origin_card` VARCHAR(19),
     `recipient_account` VARCHAR(34) NOT NULL,
     `movement_date` DATE NOT NULL,
     `amount` DECIMAL(16, 6) NOT NULL,

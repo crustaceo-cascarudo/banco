@@ -25,7 +25,8 @@ public class TokenFilter extends OncePerRequestFilter {
       "/api/users/register",
       "/api/users/login");
 
-  private static final List<String> PUBLIC_GET_PATHS = Arrays.asList();
+  private static final List<String> PUBLIC_GET_PATHS = Arrays.asList(
+      "/favicon.ico");
 
   private static final List<String> AUTHENTICATED_PATHS = Arrays.asList(
       "/api/users/logout",
