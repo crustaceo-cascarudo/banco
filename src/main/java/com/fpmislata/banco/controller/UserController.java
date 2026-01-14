@@ -98,11 +98,4 @@ public class UserController {
         UserResponse response = UserMapper.getInstance().fromUserDtoToUserResponse(updatedUser);
         return ResponseEntity.ok(response);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
 }

@@ -82,6 +82,9 @@ public class BankAccountServiceImpl implements BankAccountService {
         if(findByIban(iban).isEmpty()){
             throw new ResourceNotFoundException("No bank account found with iban "+iban);
         }
+        if (findByIban(iban).get().balance() > 0){
+            throw new BusinessException("Cannot delete bank account with iban "+iban+" because it has a positive balance.");
+        }
         bankAccountRepository.delete(iban);
     }
 

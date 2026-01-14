@@ -47,10 +47,4 @@ public class BankMovementController {
     ) {
         return ResponseEntity.ok(bankMovementService.update(bankMovementDto));
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        bankMovementService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }
