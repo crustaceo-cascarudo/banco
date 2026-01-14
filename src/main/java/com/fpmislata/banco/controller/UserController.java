@@ -5,6 +5,7 @@ import com.fpmislata.banco.controller.webModel.request.LoginUserRequest;
 import com.fpmislata.banco.controller.webModel.request.RegisterUserRequest;
 import com.fpmislata.banco.controller.webModel.response.LoginResponse;
 import com.fpmislata.banco.controller.webModel.response.UserResponse;
+import com.fpmislata.banco.domain.service.BankAccountService;
 import com.fpmislata.banco.domain.service.UserService;
 import com.fpmislata.banco.domain.service.dto.UserDto;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final BankAccountService bankAccountService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BankAccountService bankAccountService) {
         this.userService = userService;
+        this.bankAccountService = bankAccountService;
     }
 
     @PostMapping("/register")
@@ -28,6 +31,12 @@ public class UserController {
         UserDto userDto = UserMapper.getInstance().fromUserRequestToUserDto(request);
         UserDto createdUser = userService.create(userDto);
         UserResponse response = UserMapper.getInstance().fromUserDtoToUserResponse(createdUser);
+
+
+        if(bankAccountService.create(userDto.id()) == null){
+            throw new IllegalStateException("User created successfully. Error creating bank account for user with id: " + userDto.id() + ".");
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
