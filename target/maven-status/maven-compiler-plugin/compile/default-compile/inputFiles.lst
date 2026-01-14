@@ -4,6 +4,7 @@
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/CreditCardController.java
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/UserController.java
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/mapper/UserMapper.java
+/home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/webModel/request/CreateCreditCardRequest.java
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/webModel/request/InsertCategoryRequest.java
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/webModel/request/LoginUserRequest.java
 /home/ishimi/Desktop/project/banco/src/main/java/com/fpmislata/banco/controller/webModel/request/RegisterUserRequest.java

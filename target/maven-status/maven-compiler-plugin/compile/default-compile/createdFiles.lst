@@ -1,8 +1,8 @@
 com/fpmislata/banco/domain/service/BankMovementService.class
 com/fpmislata/banco/domain/service/impl/BankAccountServiceImpl.class
 com/fpmislata/banco/persistence/repository/impl/BankAccountRepositoryImpl.class
-com/fpmislata/banco/domain/service/dto/CreditCardDto.class
 com/fpmislata/banco/domain/Exception/ResourceNotFoundException.class
+com/fpmislata/banco/domain/service/dto/CreditCardDto.class
 com/fpmislata/banco/persistence/repository/impl/BankMovementRepositoryImpl.class
 com/fpmislata/banco/domain/enums/MovementType.class
 com/fpmislata/banco/controller/CreditCardController.class
@@ -38,8 +38,8 @@ com/fpmislata/banco/controller/webModel/response/DetailCategoryResponse.class
 com/fpmislata/banco/domain/model/BankMovement.class
 com/fpmislata/banco/infrastructure/PasswordEncoderImpl.class
 com/fpmislata/banco/spring/SpringConfig.class
-com/fpmislata/banco/domain/service/impl/CreditCardServiceImpl.class
 com/fpmislata/banco/domain/enums/PaymentMethod.class
+com/fpmislata/banco/domain/service/impl/CreditCardServiceImpl.class
 com/fpmislata/banco/persistence/dao/impl/entity/UserJpaEntity.class
 com/fpmislata/banco/domain/service/PasswordEncoderService.class
 com/fpmislata/banco/persistence/dao/GenericDao.class
