@@ -2,7 +2,7 @@ CREATE TABLE `user` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `surname1` VARCHAR(255) NOT NULL,
-    `surname2` VARCHAR(255) NOT NULL,
+    `surname2` VARCHAR(255),
     `dni` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `api_token` VARCHAR(255) ,

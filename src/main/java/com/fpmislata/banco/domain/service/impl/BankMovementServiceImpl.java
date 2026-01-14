@@ -38,6 +38,7 @@ public class BankMovementServiceImpl implements BankMovementService {
     }
 
     @Override
+    @Transactional
     public BankMovementDto update(BankMovementDto bankMovementDto) {
         bankMovementRepository.findById(bankMovementDto.id())
                 .orElseThrow(() -> new ResourceNotFoundException("No bank movement found with iban "+bankMovementDto.id()));
@@ -92,6 +93,7 @@ public class BankMovementServiceImpl implements BankMovementService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if(findById(id).isEmpty()){
             throw new ResourceNotFoundException("No movement found with id "+id);

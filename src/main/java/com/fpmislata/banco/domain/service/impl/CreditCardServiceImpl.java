@@ -74,7 +74,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
         return CreditCardMapper.getInstance().fromCreditCardToCreditCardDto(
                 CreditCardMapper.getInstance().fromCreditCardEntityToCreditCard(
-                        creditCardRepository.save(cardEntity)
+                        creditCardRepository.update(cardEntity)
                 )
         );
     }
@@ -107,6 +107,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
+    @Transactional
     public void deleteByCardNumber(Long cardNumber) {
         if(findByCardNumber(cardNumber).isEmpty()){
             throw new ResourceNotFoundException("No card found with card number "+cardNumber);

@@ -18,12 +18,15 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     }
 
     @Override
+    public BankAccountEntity update(BankAccountEntity bankAccountEntity) {
+        BankAccountJpaEntity entity = BankAccountMapper.getInstance().fromBankAccountEntityToBankAccountJpaEntity(bankAccountEntity);
+        return BankAccountMapper.getInstance().fromBankAccountJpaEntityToBankAccountEntity(bankAccountDao.update(entity));
+    }
+
+    @Override
     public BankAccountEntity save(BankAccountEntity bankAccountEntity) {
         BankAccountJpaEntity entity = BankAccountMapper.getInstance().fromBankAccountEntityToBankAccountJpaEntity(bankAccountEntity);
-        if(entity.getIban() == null){
-            return BankAccountMapper.getInstance().fromBankAccountJpaEntityToBankAccountEntity(bankAccountDao.insert(entity));
-        }
-        return BankAccountMapper.getInstance().fromBankAccountJpaEntityToBankAccountEntity(bankAccountDao.update(entity));
+        return BankAccountMapper.getInstance().fromBankAccountJpaEntityToBankAccountEntity(bankAccountDao.insert(entity));
     }
 
     @Override

@@ -11,7 +11,6 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class BankAccountServiceImpl implements BankAccountService {
     private final BankAccountRepository bankAccountRepository;
@@ -52,7 +51,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
         return BankAccountMapper.getInstance().fromBankAccountToBankAccountDto(
                 BankAccountMapper.getInstance().fromBankAccountEntityToBankAccount(
-                        bankAccountRepository.save(bankAccountEntity)
+                        bankAccountRepository.update(bankAccountEntity)
                 )
         );
     }

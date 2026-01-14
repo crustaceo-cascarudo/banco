@@ -4,14 +4,8 @@ import com.fpmislata.banco.domain.repository.BankAccountRepository;
 import com.fpmislata.banco.domain.repository.BankMovementRepository;
 import com.fpmislata.banco.domain.repository.CreditCardRepository;
 import com.fpmislata.banco.domain.repository.UserRepository;
-import com.fpmislata.banco.domain.service.BankAccountService;
-import com.fpmislata.banco.domain.service.BankMovementService;
-import com.fpmislata.banco.domain.service.CreditCardService;
-import com.fpmislata.banco.domain.service.UserService;
-import com.fpmislata.banco.domain.service.impl.BankAccountServiceImpl;
-import com.fpmislata.banco.domain.service.impl.BankMovementServiceImpl;
-import com.fpmislata.banco.domain.service.impl.CreditCardServiceImpl;
-import com.fpmislata.banco.domain.service.impl.UserServiceImpl;
+import com.fpmislata.banco.domain.service.*;
+import com.fpmislata.banco.domain.service.impl.*;
 import com.fpmislata.banco.infrastructure.PasswordEncoderImpl;
 import com.fpmislata.banco.persistence.dao.BankAccountDao;
 import com.fpmislata.banco.persistence.dao.BankMovementDao;
@@ -111,4 +105,10 @@ public class SpringConfig {
   public CreditCardService creditCardService(CreditCardRepository creditCardRepository) {
     return new CreditCardServiceImpl(creditCardRepository);
   }
+
+  //Tranfer Service Bean
+    @Bean
+    public TransferService transferService(BankAccountService bankAccountService, BankMovementService bankMovementService) {
+        return new TransferServiceImpl(bankAccountService, bankMovementService);
+    }
 }

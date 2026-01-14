@@ -5,6 +5,7 @@ import com.fpmislata.banco.domain.repository.entity.CreditCardEntity;
 import com.fpmislata.banco.persistence.dao.CreditCardDao;
 import com.fpmislata.banco.persistence.dao.impl.entity.CreditCardJpaEntity;
 import com.fpmislata.banco.persistence.repository.mapper.CreditCardMapper;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +18,17 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
     }
 
     @Override
+    @Transactional
+    public CreditCardEntity update(CreditCardEntity cardEntity) {
+        CreditCardJpaEntity entity = CreditCardMapper.getInstance().fromCreditCardEntityToCreditCardJpaEntity(cardEntity);
+        return CreditCardMapper.getInstance().fromCreditCardJpaEntityToCreditCardEntity(creditCardDao.update(entity));
+    }
+
+    @Override
+    @Transactional
     public CreditCardEntity save(CreditCardEntity cardEntity) {
         CreditCardJpaEntity entity = CreditCardMapper.getInstance().fromCreditCardEntityToCreditCardJpaEntity(cardEntity);
-        if(entity.getCardNumber() == null){
-            return CreditCardMapper.getInstance().fromCreditCardJpaEntityToCreditCardEntity(creditCardDao.insert(entity));
-        }
-        return CreditCardMapper.getInstance().fromCreditCardJpaEntityToCreditCardEntity(creditCardDao.update(entity));
+        return CreditCardMapper.getInstance().fromCreditCardJpaEntityToCreditCardEntity(creditCardDao.insert(entity));
     }
 
     @Override

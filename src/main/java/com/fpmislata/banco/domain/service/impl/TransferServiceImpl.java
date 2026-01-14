@@ -15,16 +15,11 @@ import java.util.Optional;
 
 public class TransferServiceImpl implements TransferService {
 
-    private BankAccountService bankAccountService;
-    private BankMovementService bankMovementService;
+    private final BankAccountService bankAccountService;
+    private final BankMovementService bankMovementService;
 
-    @Autowired
-    public void setBankAccountService(BankAccountService bankAccountService) {
+    public TransferServiceImpl(BankAccountService bankAccountService, BankMovementService bankMovementService) {
         this.bankAccountService = bankAccountService;
-    }
-
-    @Autowired
-    public  void setBankMovementService(BankMovementService bankMovementService) {
         this.bankMovementService = bankMovementService;
     }
 

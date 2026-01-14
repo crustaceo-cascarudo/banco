@@ -8,7 +8,6 @@ public record UserDto(
         String name,
         @NotNull (message = "Surname 1 cannot be null")
         String surname1,
-        @NotNull (message = "Surname 2 cannot be null")
         String surname2,
         @NotNull(message = "DNI cannot be null")
         String dni,

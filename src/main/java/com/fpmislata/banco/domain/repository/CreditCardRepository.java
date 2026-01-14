@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CreditCardRepository {
+    CreditCardEntity update(CreditCardEntity cardEntity);
     CreditCardEntity save(CreditCardEntity cardEntity);
     Optional<CreditCardEntity> findByCardNumber(Long cardNumber);
     List<CreditCardEntity> findByAccountIban(String iban);
