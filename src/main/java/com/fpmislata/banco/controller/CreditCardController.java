@@ -27,8 +27,8 @@ public class CreditCardController {
         ));
     }
 
-    @GetMapping("/account/iban")
-    public ResponseEntity<List<CreditCardDto>> findByAccountIban(@RequestParam String iban) {
+    @GetMapping("/account/{iban}")
+    public ResponseEntity<List<CreditCardDto>> findByAccountIban(@PathVariable String iban) {
         return ResponseEntity.ok(creditCardService.findByAccountIban(iban));
     }
 
