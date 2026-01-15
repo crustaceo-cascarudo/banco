@@ -52,6 +52,10 @@ public class CardPaymentServiceImpl implements CardPaymentService {
             throw new BusinessException("Insufficient funds in origin account");
         }
 
+        if(cardPaymentRequest.concept().length()<3){
+            throw new BusinessException("Concept must be at least 3 characters long");
+        }
+
         BankAccount updatedOriginAccount = BankAccountMapper.getInstance().fromBankAccountDtoToBankAccount(originAccount);
         updatedOriginAccount.setBalance(updatedOriginAccount.getBalance() - cardPaymentRequest.amount());
 

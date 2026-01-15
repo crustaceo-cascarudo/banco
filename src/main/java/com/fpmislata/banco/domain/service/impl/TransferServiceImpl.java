@@ -60,6 +60,10 @@ public class TransferServiceImpl implements TransferService {
             throw new BusinessException("Insufficient funds in origin account");
         }
 
+        if(transferRequest.bankMovement().concept().length()<3){
+            throw new BusinessException("Concept must be at least 3 characters long");
+        }
+
         BankAccount updatedOriginAccount = BankAccountMapper.getInstance().fromBankAccountDtoToBankAccount(originAccount);
         updatedOriginAccount.setBalance(updatedOriginAccount.getBalance() - transferRequest.bankMovement().amount());
 
