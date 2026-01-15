@@ -107,8 +107,13 @@ public class SpringConfig {
   }
 
   //Tranfer Service Bean
-    @Bean
-    public TransferService transferService(BankAccountService bankAccountService, BankMovementService bankMovementService) {
-        return new TransferServiceImpl(bankAccountService, bankMovementService);
-    }
+  @Bean
+  public TransferService transferService(BankAccountService bankAccountService, BankMovementService bankMovementService) {
+      return new TransferServiceImpl(bankAccountService, bankMovementService);
+  }
+  //Tranfer Service Bean
+  @Bean
+  public CardPaymentService cardPaymentService(BankAccountService bankAccountService, BankMovementService bankMovementService, CreditCardService creditCardService) {
+      return new CardPaymentServiceImpl(bankAccountService, bankMovementService, creditCardService);
+  }
 }

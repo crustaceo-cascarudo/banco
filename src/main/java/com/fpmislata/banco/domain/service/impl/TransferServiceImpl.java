@@ -28,9 +28,17 @@ public class TransferServiceImpl implements TransferService {
     public BankMovementDto processTransfer(BankMovementDto bankMovementDto) {
         BankAccountDto originAccount = bankAccountService.findByIban(bankMovementDto.originAccountIban())
                 .orElseThrow(() -> new BusinessException("Origin account not found"));
-        System.out.println("AQUI,"+bankMovementDto.originAccountIban()+","+bankMovementDto.recipientAccountIban());
+
         BankAccountDto recipientAccount = bankAccountService.findByIban(bankMovementDto.recipientAccountIban())
                 .orElseThrow(() -> new BusinessException("Recipient account not found"));
+
+        if(originAccount.iban().equals(recipientAccount.iban())){
+            throw new BusinessException("Origin and recipient accounts must be different");
+        }
+
+        if(bankMovementDto.amount()<0){
+            throw new BusinessException("Transfer amount must be positive");
+        }
 
         if (originAccount.balance() < bankMovementDto.amount()) {
             throw new BusinessException("Insufficient funds in origin account");
