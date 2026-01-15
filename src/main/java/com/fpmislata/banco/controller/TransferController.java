@@ -1,5 +1,6 @@
 package com.fpmislata.banco.controller;
 
+import com.fpmislata.banco.controller.webModel.request.TransferRequest;
 import com.fpmislata.banco.domain.service.TransferService;
 import com.fpmislata.banco.domain.service.dto.BankMovementDto;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class TransferController {
     }
 
     @PostMapping
-    public ResponseEntity<BankMovementDto> processTransfer(@RequestBody BankMovementDto bankMovementDto) {
-        return ResponseEntity.ok(transferService.processTransfer(bankMovementDto));
+    public ResponseEntity<BankMovementDto> processTransfer(@RequestBody TransferRequest transferRequest) {
+        return ResponseEntity.ok(transferService.processTransfer(transferRequest));
     }
 }
