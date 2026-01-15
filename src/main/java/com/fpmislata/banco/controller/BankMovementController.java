@@ -26,12 +26,12 @@ public class BankMovementController {
     }
 
     @GetMapping("/origin/{iban}")
-    public ResponseEntity<List<BankMovementDto>> findByOriginAccountIban(@RequestParam String iban) {
+    public ResponseEntity<List<BankMovementDto>> findByOriginAccountIban(@PathVariable String iban) {
         return ResponseEntity.ok(bankMovementService.findByOriginAccountIban(iban));
     }
 
     @GetMapping("/recipient/{iban}")
-    public ResponseEntity<List<BankMovementDto>> findByRecipientAccountIban(@RequestParam String iban) {
+    public ResponseEntity<List<BankMovementDto>> findByRecipientAccountIban(@PathVariable String iban) {
         return ResponseEntity.ok(bankMovementService.findByRecipientAccountIban(iban));
     }
 

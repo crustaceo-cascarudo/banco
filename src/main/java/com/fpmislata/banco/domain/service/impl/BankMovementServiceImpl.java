@@ -9,6 +9,7 @@ import com.fpmislata.banco.domain.service.BankMovementService;
 import com.fpmislata.banco.domain.service.dto.BankMovementDto;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,23 @@ public class BankMovementServiceImpl implements BankMovementService {
     @Override
     @Transactional
     public BankMovementDto create(BankMovementDto bankMovementDto) {
-        if(findById(bankMovementDto.id()).isPresent()){
-            throw new BusinessException("Bank movement wit id '"+bankMovementDto.id()+"' already exists");
+        if(bankMovementDto.id() != null)
+            if(findById(bankMovementDto.id()).isPresent()){
+                throw new BusinessException("Bank movement wit id '"+bankMovementDto.id()+"' already exists");
+            }
+
+        if(bankMovementDto.movementDate() == null){
+            bankMovementDto = new BankMovementDto(
+                    bankMovementDto.id(),
+                    bankMovementDto.movementType(),
+                    bankMovementDto.paymentMethod(),
+                    bankMovementDto.originAccountIban(),
+                    bankMovementDto.originCreditCardNumber(),
+                    bankMovementDto.recipientAccountIban(),
+                    java.sql.Date.valueOf(LocalDate.now()),
+                    bankMovementDto.amount(),
+                    bankMovementDto.concept()
+            );
         }
 
         BankMovementEntity bankMovementEntity = BankMovementMapper.getInstance().fromBankMovementToBankMovementEntity(

@@ -17,12 +17,13 @@ import java.util.List;
 
 @Component
 @Order(1)
-public class TokenFilter extends OncePerRequestFilter {
+public class TokenFilter /*extends OncePerRequestFilter*/ {
 
   private final UserRepository userRepository;
 
   private static final List<String> PUBLIC_PATHS = Arrays.asList(
       "/api/users/register",
+      "/api/bank-accounts/user/",
       "/api/users/login");
 
   private static final List<String> PUBLIC_GET_PATHS = Arrays.asList(
@@ -60,7 +61,7 @@ public class TokenFilter extends OncePerRequestFilter {
     response.getWriter().write(jsonResponse);
   }
 
-  @Override
+  /*@Override*/
   protected void doFilterInternal(
       HttpServletRequest request,
       HttpServletResponse response,

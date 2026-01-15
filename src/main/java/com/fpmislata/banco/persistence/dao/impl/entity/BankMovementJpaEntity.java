@@ -8,21 +8,29 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name="bank_movement")
+@Table(name="banking_movement")
 public class BankMovementJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private MovementType movementType;
     @NotNull
+    @Column(name = "payment_method")
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @NotNull
+    @Column (name = "origin_account")
     private String originAccountIban;
+    @Column (name = "origin_card")
     private Long originCreditCardNumber;
     @NotNull
+    @Column (name = "recipient_account")
     private String recipientAccountIban;
     @NotNull
+    @Column(name = "movement_date")
     private Date movementDate;
     @NotNull
     private float amount;
