@@ -3,8 +3,6 @@ package com.fpmislata.banco.persistence.repository.mapper;
 import com.fpmislata.banco.domain.repository.entity.BankAccountEntity;
 import com.fpmislata.banco.persistence.dao.impl.entity.BankAccountJpaEntity;
 
-import java.util.ArrayList;
-
 public class BankAccountMapper {
     private static BankAccountMapper instance;
 

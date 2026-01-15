@@ -1,7 +1,5 @@
 package com.fpmislata.banco.persistence.repository.mapper;
 
-import com.fpmislata.banco.domain.enums.MovementType;
-import com.fpmislata.banco.domain.enums.PaymentMethod;
 import com.fpmislata.banco.domain.repository.entity.BankMovementEntity;
 import com.fpmislata.banco.persistence.dao.impl.entity.BankMovementJpaEntity;
 

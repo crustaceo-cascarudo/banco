@@ -33,7 +33,7 @@ public class UserController {
         UserResponse response = UserMapper.getInstance().fromUserDtoToUserResponse(createdUser);
 
 
-        if(bankAccountService.create(userDto.id()) == null){
+        if(bankAccountService.create(createdUser.id()) == null){
             throw new IllegalStateException("User created successfully. Error creating bank account for user with id: " + userDto.id() + ".");
         }
 
