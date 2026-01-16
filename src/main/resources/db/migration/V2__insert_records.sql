@@ -1,8 +1,8 @@
 -- Inserciones iniciales: users
 INSERT INTO `user` (`id`, `name`, `surname1`, `surname2`, `dni`, `password`, `api_token`) VALUES
-(1, 'Alice', 'González', 'Martínez', '11111111A', 'password1', 'token_alice'),
-(2, 'Bob', 'Pérez', 'López', '22222222B', 'password2', 'token_bob'),
-(3, 'Carol', 'Santos', 'Ruiz', '33333333C', 'password3', NULL);
+(1, 'Alice', 'González', 'Martínez', '11111111A', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6', 'token_alice'),
+(2, 'Bob', 'Pérez', 'López', '22222222B', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6', 'token_bob'),
+(3, 'Carol', 'Santos', 'Ruiz', '33333333C', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6', NULL);
 
 -- Cuentas asociadas a usuarios
 INSERT INTO `account` (`iban`, `balance`, `user_id`) VALUES
