@@ -20,7 +20,7 @@ public class BankMovementDaoJpa implements BankMovementDao {
 
   @Override
   public List<BankMovementJpaEntity> findOriginAccountIban(String iban) {
-    String sql = "SELECT b FROM BankMovementJpaEntity b WHERE b.originAccountIban = :iban order by b.dateTime DESC";
+    String sql = "SELECT b FROM BankMovementJpaEntity b WHERE b.originAccountIban = :iban";
     try {
       return entityManager.createQuery(sql, BankMovementJpaEntity.class)
           .setParameter("iban", iban)
@@ -32,7 +32,7 @@ public class BankMovementDaoJpa implements BankMovementDao {
 
   @Override
   public List<BankMovementJpaEntity> findByRecipientAccountIban(String iban) {
-    String sql = "SELECT b FROM BankMovementJpaEntity b WHERE b.recipientAccountIban = :iban order by b.dateTime DESC";
+    String sql = "SELECT b FROM BankMovementJpaEntity b WHERE b.recipientAccountIban = :iban";
     try {
       return entityManager.createQuery(sql, BankMovementJpaEntity.class)
           .setParameter("iban", iban)
