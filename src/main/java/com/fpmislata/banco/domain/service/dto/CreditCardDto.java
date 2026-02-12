@@ -13,7 +13,6 @@ public record CreditCardDto(
         int cvc,
         @NotNull
         String fullName,
-        @NotNull
         String accountIban
 ) {
 }

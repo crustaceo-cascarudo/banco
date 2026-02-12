@@ -1,7 +1,7 @@
 -- Inserciones iniciales: users
 INSERT INTO `user` (`id`, `name`, `surname1`, `surname2`, `dni`, `password`) VALUES
 (1, 'Alice', 'González', 'Martínez', '11111111A', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6'),
-(2, 'Virginia', 'Puff', 'Señorita', '11111111b', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6');
+(2, 'Virginia', 'Puff', 'Señorita', '11111111B', '$2a$12$9kMYTkiTnHVA5uUn9fJKb.9iNKUXs6AyzfmjCQgDA6h4rNWL.7fv6');
 
 -- Cuentas asociadas a usuarios
 INSERT INTO `account` (`iban`, `balance`, `user_id`) VALUES

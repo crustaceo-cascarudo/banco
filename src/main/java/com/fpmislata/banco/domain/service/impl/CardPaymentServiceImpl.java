@@ -33,13 +33,13 @@ public class CardPaymentServiceImpl implements CardPaymentService {
   @Override
   @Transactional
   public BankMovementDto processCardPayment(CardPaymentRequest cardPaymentRequest) {
-    BankAccountDto originAccount = bankAccountService.findByIban(cardPaymentRequest.originCreditCard().accountIban())
+    CreditCardDto validatedCard = validateAndGetCreditCard(cardPaymentRequest.originCreditCard());
+    
+    BankAccountDto originAccount = bankAccountService.findByIban(validatedCard.accountIban())
         .orElseThrow(() -> new BusinessException("Origin account not found"));
 
     BankAccountDto recipientAccount = bankAccountService.findByIban(cardPaymentRequest.recipientIban())
         .orElseThrow(() -> new BusinessException("Recipient account not found"));
-
-    validateCreditcCard(cardPaymentRequest.originCreditCard());
 
     if (originAccount.iban().equals(recipientAccount.iban())) {
       throw new BusinessException("Origin and recipient accounts must be different");
@@ -69,7 +69,7 @@ public class CardPaymentServiceImpl implements CardPaymentService {
         MovementType.DEBIT,
         PaymentMethod.CARD_PAYMENT,
         originAccount.iban(),
-        cardPaymentRequest.originCreditCard().cardNumber(),
+        validatedCard.cardNumber(),
         recipientAccount.iban(),
         Date.valueOf(LocalDate.now()),
         cardPaymentRequest.amount(),
@@ -80,7 +80,7 @@ public class CardPaymentServiceImpl implements CardPaymentService {
     return bankMovementService.create(bankMovementDto);
   }
 
-  private void validateCreditcCard(CreditCardDto cardDto) {
+  private CreditCardDto validateAndGetCreditCard(CreditCardDto cardDto) {
     CreditCardDto foundByCardNumberAccount = creditCardService.findByCardNumber(cardDto.cardNumber()).orElseThrow(
         () -> new BusinessException("Credit card number not found"));
     if (!foundByCardNumberAccount.fullName().equalsIgnoreCase(cardDto.fullName())) {
@@ -88,31 +88,28 @@ public class CardPaymentServiceImpl implements CardPaymentService {
           "Card holder name does not match " + foundByCardNumberAccount.fullName() + " VS " + cardDto.fullName());
     }
 
-    if (!foundByCardNumberAccount.accountIban().equals(cardDto.accountIban())) {
-      throw new BusinessException("Card account IBAN does not match " + foundByCardNumberAccount.accountIban() + " VS "
-          + cardDto.accountIban());
-    }
-
     if (foundByCardNumberAccount.cvc() != cardDto.cvc()) {
       throw new BusinessException("CVC does not match " + foundByCardNumberAccount.cvc() + " VS " + cardDto.cvc());
     }
 
-    LocalDate foundAccountDate = LocalDate.of(
-        foundByCardNumberAccount.expirationDate().getYear(),
-        foundByCardNumberAccount.expirationDate().getMonth(),
-        foundByCardNumberAccount.expirationDate().getDay());
+    LocalDate foundAccountDate = foundByCardNumberAccount.expirationDate().toInstant()
+        .atZone(java.time.ZoneId.systemDefault())
+        .toLocalDate();
 
-    LocalDate cardDtoDate = LocalDate.of(
-        cardDto.expirationDate().getYear(),
-        cardDto.expirationDate().getMonth(),
-        cardDto.expirationDate().getDay());
-
-    if (!foundAccountDate.equals(cardDtoDate)) {
-      throw new BusinessException("Expiration date does not match " + foundAccountDate + " VS " + cardDtoDate);
+    LocalDate cardDtoDate = cardDto.expirationDate().toInstant()
+        .atZone(java.time.ZoneId.systemDefault())
+        .toLocalDate();
+    if (foundAccountDate.getYear() != cardDtoDate.getYear() 
+        || foundAccountDate.getMonthValue() != cardDtoDate.getMonthValue()) {
+      throw new BusinessException("Expiration date does not match " 
+          + foundAccountDate.getYear() + "-" + String.format("%02d", foundAccountDate.getMonthValue())
+          + " VS " + cardDtoDate.getYear() + "-" + String.format("%02d", cardDtoDate.getMonthValue()));
     }
 
     if (cardDto.expirationDate().before(Date.valueOf(LocalDate.now()))) {
       throw new BusinessException("Credit card is expired");
     }
+    
+    return foundByCardNumberAccount;
   }
 }
