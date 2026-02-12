@@ -5,7 +5,6 @@ CREATE TABLE `user` (
     `surname2` VARCHAR(255),
     `dni` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
-    `api_token` VARCHAR(255) ,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -50,11 +49,12 @@ CREATE TABLE `banking_movement` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `api_token` (
-    `token` VARCHAR(255) NOT NULL,
-    `user_id` INT(11) NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`token`),
-    CONSTRAINT `fk_api_token_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;)
+CREATE TABLE `api_client` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `client_name` VARCHAR(255) NOT NULL,
+    `api_key_hash` VARCHAR(255) NOT NULL,
+    `status` ENUM('ACTIVE', 'INACTIVE') NOT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

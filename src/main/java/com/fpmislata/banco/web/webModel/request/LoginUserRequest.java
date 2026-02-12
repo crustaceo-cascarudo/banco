@@ -1,4 +1,4 @@
-package com.fpmislata.banco.controller.webModel.request;
+package com.fpmislata.banco.web.webModel.request;
 
 public record LoginUserRequest(
     String dni,

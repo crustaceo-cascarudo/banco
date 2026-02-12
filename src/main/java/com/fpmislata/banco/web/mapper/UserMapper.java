@@ -1,7 +1,7 @@
-package com.fpmislata.banco.controller.mapper;
+package com.fpmislata.banco.web.mapper;
 
-import com.fpmislata.banco.controller.webModel.request.RegisterUserRequest;
-import com.fpmislata.banco.controller.webModel.response.UserResponse;
+import com.fpmislata.banco.web.webModel.request.RegisterUserRequest;
+import com.fpmislata.banco.web.webModel.response.UserResponse;
 import com.fpmislata.banco.domain.service.dto.UserDto;
 
 public class UserMapper {

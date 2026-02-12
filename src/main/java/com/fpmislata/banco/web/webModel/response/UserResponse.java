@@ -1,4 +1,4 @@
-package com.fpmislata.banco.controller.webModel.response;
+package com.fpmislata.banco.web.webModel.response;
 
 public record UserResponse(
     Long id,
