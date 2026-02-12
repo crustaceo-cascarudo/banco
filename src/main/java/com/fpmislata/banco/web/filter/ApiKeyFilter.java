@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,9 +30,17 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException {
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+
+        String requestMethod = request.getMethod();
+
+        if ("OPTIONS".equalsIgnoreCase(requestMethod)) {
+            System.out.println("[ApiKeyFilter] OPTIONS request (CORS preflight), permitir sin validación");
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String apiKey = request.getHeader(API_KEY_HEADER);
 
@@ -40,6 +49,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
             if (apiClient.isPresent()) {
                 ApiClient client = apiClient.get();
+                System.out.println("[ApiKeyFilter] API Client autenticado: " + client.getClientName());
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
